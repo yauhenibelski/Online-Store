@@ -1,0 +1,31 @@
+.rating {
+  width: 75px;
+  height: 13px;
+  position: relative;
+
+    .stars {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-image: url(./img/stars.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 1;
+    }
+    .stars_border {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-image: url(./img/stars_border.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      z-index: 3;
+    }
+    .white_background {
+      position: absolute;
+      height: 100%;
+      background-color: white;
+      right: 0px;
+      z-index: 2;
+    }
+}

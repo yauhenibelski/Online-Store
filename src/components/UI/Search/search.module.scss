@@ -1,0 +1,28 @@
+.search {
+  position: relative;
+  max-width: 1000px;
+  flex-basis: 60%;
+  margin-left: 5%;
+
+  input {
+    height: 35px;
+    width: 100%;
+    padding-left: 30px;
+    font-size: 18px;
+    border-radius: 31px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    right: 0px;
+    width: 25px;
+    height: 25px;
+    background-image: url(./img/gg_search.svg);
+    background-size: contain;
+  }
+}

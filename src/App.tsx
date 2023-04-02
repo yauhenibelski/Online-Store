@@ -1,23 +1,20 @@
 import './styles/index.scss';
+import React from 'react';
 import Header from './components/UI/Header/Sticky-Header';
-import Search from './components/UI/Search/Search';
-import Logo from './components/UI/Logo/Logo';
-import Directory from './components/UI/Directory/Directory';
-import { categories } from './scripts/global-const';
-// import prod from './assets/data/products.json';
+import SearchBlok from './components/SearchBlok';
+import DirectoryBlok from './components/DirectoryBlok';
+import Products from './components/Products';
 
 function App() {
   return (
-    <>
+    <React.StrictMode>
       <Header/>
+      <SearchBlok/>
       <section>
-        <Logo/>
-        <Search/>
-        <Directory
-          directory={categories}
-          directoryName='Category'/>
+        <DirectoryBlok/>
+        <Products/>
       </section>
-    </>
+    </React.StrictMode>
   );
 }
 
