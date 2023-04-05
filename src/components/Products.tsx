@@ -1,17 +1,15 @@
 import { formatText } from '../scripts/helpers/helpers';
 import Rating from './UI/Rating/Rating';
-import directory from '../assets/data/products.json';
+import { Products as ProductsType } from '../scripts/types';
 
-function Products() {
-  const { products } = directory;
-
+function Products({ products }: ProductsType) {
   return (
     <div className='products'>
       {
         products.map((prod) => {
           const img: string = prod.thumbnail;
           return (
-            <div className='product'>
+            <div className='product' key={prod.id}>
               <div
                 style={ { backgroundImage: `url(${img})` }}
                 className='thumbnail'

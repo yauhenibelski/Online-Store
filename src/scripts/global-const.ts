@@ -1,23 +1,6 @@
-interface IProducts {
-  products: {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    discountPercentage: number;
-    rating: number;
-    stock: number;
-    brand: string;
-    category: string;
-    thumbnail: string;
-    images: string[];
-  } [];
-  total: number;
-  skip: number;
-  limit: number;
-}
+import { Products } from './types';
 
-export function getNameDirectory({ products }: IProducts, get: 'category' | 'brand'): string[] {
+export function getNameDirectory({ products }: Products, get: 'category' | 'brand'): string[] {
   const names: string[] = [];
 
   products.reduce((acc: string[], product) => {

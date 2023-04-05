@@ -1,20 +1,30 @@
 import './styles/index.scss';
-import React from 'react';
+import React, { useState } from 'react';
 import Header from './components/UI/Header/Sticky-Header';
 import SearchBlok from './components/SearchBlok';
-import DirectoryBlok from './components/DirectoryBlok';
+import DirectoryBlock from './components/DirectoryBlock';
 import Products from './components/Products';
+import FiltersBlock from './components/FiltersBlock';
+import catalog from './assets/data/products.json';
 
 function App() {
+  // const [products, setProducts] = useState(catalog.products);
+  const [selectedCategories, setSelectedCategories] = useState([] as string[]);
+  const [selectedBrand, setSelectedBrand] = useState([] as string[]);
+  console.log([...selectedBrand, ...selectedCategories]);
   return (
-    <React.StrictMode>
+    <>
       <Header/>
       <SearchBlok/>
       <section>
-        <DirectoryBlok/>
-        <Products/>
+        <DirectoryBlock
+          setSelectedBrand={setSelectedBrand}
+          setSelectedCategories={setSelectedCategories}
+        />
+        <Products products={catalog.products}/>
+        <FiltersBlock/>
       </section>
-    </React.StrictMode>
+    </>
   );
 }
 
