@@ -1,12 +1,26 @@
 import classes from './custom_select.module.scss';
+import { IFiltersBlock } from '../../FiltersBlock';
 
-interface S {
-  children?: React.ReactNode;
+interface ICustomSelect extends IFiltersBlock {
+  children: React.ReactNode;
+  name: string;
 }
 
-function CustomSelect({ children }: S) {
+function CustomSelect({
+  children, name, sorting, setSorting,
+}: ICustomSelect) {
   return (
-    <select className={classes.s}>{children}</select>
+    <select
+      className={classes.s}
+      name={name}
+      onChange={(e) => {
+        return setSorting(
+          Object.defineProperty({ ...sorting }, name, { value: e.currentTarget.value }),
+        );
+      }}
+    >
+      {children}
+    </select>
   );
 }
 export default CustomSelect;

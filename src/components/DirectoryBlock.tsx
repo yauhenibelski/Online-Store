@@ -1,27 +1,33 @@
-import { getNameDirectory } from '../scripts/global-const';
+import { getNameDirectory } from '../scripts/helpers/helpers';
 import Directory from './UI/Directory/Directory';
 import products from '../assets/data/products.json';
 
-interface IDirectoryBlock {
-  setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>
-  setSelectedBrand: React.Dispatch<React.SetStateAction<string[]>>
+export interface IDirectoryBlock {
+  directoryFilter: {
+    categories: string[],
+    brand: string[],
+  };
+  setDirectoryFilter: React.Dispatch<React.SetStateAction<{
+    categories: string[];
+    brand: string[];
+  }>>
 }
 
-function DirectoryBlock({ setSelectedCategories, setSelectedBrand }: IDirectoryBlock) {
+export function DirectoryBlock({ directoryFilter, setDirectoryFilter }: IDirectoryBlock) {
   return (
     <div>
       <Directory
         directory={getNameDirectory(products, 'category')}
         directoryName='Category'
-        setSelectedName={setSelectedCategories}
+        directoryFilter={directoryFilter}
+        setDirectoryFilter={setDirectoryFilter}
       />
       <Directory
         directory={getNameDirectory(products, 'brand')}
         directoryName='Brand'
-        setSelectedName={setSelectedBrand}
+        directoryFilter={directoryFilter}
+        setDirectoryFilter={setDirectoryFilter}
       />
     </div>
   );
 }
-
-export default DirectoryBlock;

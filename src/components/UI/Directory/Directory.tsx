@@ -1,19 +1,29 @@
 import { FormEvent } from 'react';
 import classes from './directory.module.scss';
+import { IDirectoryBlock } from '../../DirectoryBlock';
 
-interface IDirectory {
-  directory: string[],
-  directoryName: string,
-  setSelectedName: React.Dispatch<React.SetStateAction<string[]>>,
-  onChange?(e?: FormEvent<HTMLFormElement>): void
+interface IDirectory extends IDirectoryBlock {
+  directory: string[];
+  directoryName: string;
+  onChange?(e: FormEvent<HTMLFormElement>): void,
 }
 
-function Directory({ directory, directoryName, setSelectedName }: IDirectory) {
+function Directory({
+  directory, directoryName, directoryFilter, setDirectoryFilter,
+}: IDirectory) {
   const getSelectedNames = (e: FormEvent<HTMLFormElement>) => {
     let slCategories = [...e.currentTarget.elements] as HTMLInputElement[];
     slCategories = slCategories.filter((input) => input.checked);
 
-    setSelectedName((slCategories.map((input) => input.id)));
+    return directoryName === 'Category'
+      ? setDirectoryFilter({
+        categories: slCategories.map((input) => input.id),
+        brand: directoryFilter.brand,
+      })
+      : setDirectoryFilter({
+        brand: slCategories.map((input) => input.id),
+        categories: directoryFilter.categories,
+      });
   };
 
   return (

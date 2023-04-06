@@ -1,46 +1,66 @@
-import { useState } from 'react';
 import classes from './range.module.scss';
+import { IFiltersBlock } from '../../FiltersBlock';
+import { maxPrice, minPrice } from '../../../scripts/global_const';
 
-function Range() {
-  const [fromSlider, setFromSlider] = useState(10);
-  const [toSlider, setToSlider] = useState(60);
+function Range({ sorting, setSorting }: IFiltersBlock) {
+  const { min } = sorting.price;
+  const { max } = sorting.price;
+
   return (
     <div className={classes.wrapper}>
       <h4 style={{ textAlign: 'center' }}>Price</h4>
       <div className={classes.container}>
         <div className={classes.sliders_control}>
           <input
-            id="fromSlider"
             type="range"
             onChange={(e) => {
-              return +e.target.value >= toSlider ? setFromSlider(toSlider)
-                : setFromSlider(+e.target.value);
+              if (+e.currentTarget.value >= max) {
+                e.currentTarget.value = `${max}`;
+              }
+              setSorting(
+                Object.defineProperty({ ...sorting }, 'price', {
+                  value: {
+                    max,
+                    min: e.currentTarget.value,
+                  },
+                }),
+              );
             }}
             style={{
               height: 0,
               zIndex: 1,
             }}
-            value={fromSlider}
-            min="0"
-            max="100"
+            value={min}
+            min={minPrice}
+            max={maxPrice}
           />
           <input
             id="toSlider"
             type="range"
             onChange={(e) => {
-              return +e.target.value <= fromSlider ? setToSlider(fromSlider)
-                : setToSlider(+e.target.value);
+              if (+e.currentTarget.value <= min) {
+                e.currentTarget.value = `${min}`;
+              }
+              setSorting(
+                Object.defineProperty({ ...sorting }, 'price', {
+                  value: {
+                    min,
+                    max: e.currentTarget.value,
+                  },
+                }),
+              );
             }}
-            value={toSlider}
-            min="0"
-            max="100"/>
+            value={max}
+            min={minPrice}
+            max={maxPrice}
+          />
         </div>
         <div className={classes.form_control}>
           <div>
-            <p>Min: {fromSlider}</p>
+            <p>Min: {min}$</p>
           </div>
           <div>
-            <p>Max: {toSlider}</p>
+            <p>Max: {max}$</p>
           </div>
         </div>
       </div>
