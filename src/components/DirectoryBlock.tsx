@@ -1,4 +1,4 @@
-import { getNameDirectory } from '../scripts/helpers/helpers';
+import { formatText, getNameDirectory } from '../scripts/helpers/helpers';
 import Directory from './UI/Directory/Directory';
 import products from '../assets/data/products.json';
 
@@ -10,10 +10,13 @@ export interface IDirectoryBlock {
   setDirectoryFilter: React.Dispatch<React.SetStateAction<{
     categories: string[];
     brand: string[];
-  }>>
+  }>>,
+  currentBrands: string[],
 }
 
-export function DirectoryBlock({ directoryFilter, setDirectoryFilter }: IDirectoryBlock) {
+export function DirectoryBlock({
+  currentBrands, directoryFilter, setDirectoryFilter,
+}: IDirectoryBlock) {
   return (
     <div>
       <Directory
@@ -21,12 +24,14 @@ export function DirectoryBlock({ directoryFilter, setDirectoryFilter }: IDirecto
         directoryName='Category'
         directoryFilter={directoryFilter}
         setDirectoryFilter={setDirectoryFilter}
+        currentBrands={currentBrands}
       />
       <Directory
-        directory={getNameDirectory(products, 'brand')}
+        directory={currentBrands.map((brand) => formatText(brand))}
         directoryName='Brand'
         directoryFilter={directoryFilter}
         setDirectoryFilter={setDirectoryFilter}
+        currentBrands={currentBrands}
       />
     </div>
   );
