@@ -25,7 +25,6 @@ function HomePage() {
   const sortValues: SortValue = Object.assign(directoryFilter, sorting);
 
   const { sortedProducts, currentBrands } = sortProducts(catalog.products, sortValues);
-  console.log(currentBrands);
 
   return (
     <main>

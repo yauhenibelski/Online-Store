@@ -12,6 +12,9 @@ function CustomSelect({
   return (
     <select
       className={classes.s}
+      value={
+        Object.getOwnPropertyDescriptor(sorting, name)?.value
+      }
       name={name}
       onChange={(e) => {
         return setSorting(

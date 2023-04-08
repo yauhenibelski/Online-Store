@@ -1,6 +1,7 @@
 import Range from './UI/Range/Range';
 import OvalButton from './UI/buttons/oval_button/OvalButton';
 import CustomSelect from './UI/custom_select/CustomSelect';
+import { maxPrice, minPrice } from '../scripts/global_const';
 
 export interface IFiltersBlock {
   sorting: {
@@ -18,7 +19,7 @@ export interface IFiltersBlock {
       min: number;
       max: number;
     };
-  }>>
+  }>>,
 }
 
 function FiltersBlock({ sorting, setSorting }: IFiltersBlock) {
@@ -26,7 +27,20 @@ function FiltersBlock({ sorting, setSorting }: IFiltersBlock) {
     <div className='filters_wrapper'>
       <h3>Filters</h3>
       <div className='filters'>
-        <OvalButton>Clear Filter</OvalButton>
+        <OvalButton
+          onClick={() => {
+            setSorting({
+              show: '15',
+              sortBy: '',
+              price: {
+                min: minPrice,
+                max: maxPrice,
+              },
+            });
+          }}
+        >
+          Clear Filter
+        </OvalButton>
         <CustomSelect
           name={'sortBy'}
           sorting={sorting}

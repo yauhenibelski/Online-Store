@@ -1,4 +1,4 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import classes from './directory.module.scss';
 import { IDirectoryBlock } from '../../DirectoryBlock';
 
@@ -16,9 +16,13 @@ function Directory({
   setDirectoryFilter,
   directoryType,
 }: IDirectory) {
+  const [checkedInput, setFormValue] = useState([] as HTMLInputElement[]);
+
   const getSelectedNames = (e: FormEvent<HTMLFormElement>) => {
     let slCategories = [...e.currentTarget.elements] as HTMLInputElement[];
     slCategories = slCategories.filter((input) => input.checked);
+
+    setFormValue(slCategories);
 
     return directoryName === 'Category'
       ? setDirectoryFilter({
@@ -33,7 +37,29 @@ function Directory({
 
   return (
     <div className={classes.directory}>
-      <h3 className={classes.name}>{directoryName}</h3>
+      <div className={classes.name}>
+        <h3>{directoryName}</h3>
+        {
+          directoryName === 'Brand'
+            ? false
+            : <button
+              onClick={() => {
+                setDirectoryFilter(
+                  {
+                    categories: [],
+                    brand: [],
+                  },
+                );
+                checkedInput.forEach((i) => {
+                  // eslint-disable-next-line no-param-reassign
+                  i.checked = false;
+                });
+              }}
+            >
+            See all products
+            </button>
+        }
+      </div>
       <form
         className={classes.container}
         onChange={getSelectedNames}

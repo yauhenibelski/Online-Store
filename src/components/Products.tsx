@@ -9,7 +9,7 @@ interface IProducts {
 function Products({ products }: IProducts) {
   return (!products.length
     ? <div className='products'>
-      <h1 style={{ marginTop: '40%' }}>No products found =(</h1>
+      <h1 style={{ marginTop: '30%' }}>No products found =(</h1>
     </div>
     : <div className='products'>
       {

@@ -3,9 +3,23 @@
   width: 260px;
   font-size: 14px;
 
-  h3 {
-    text-align: center;
+  .name {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
     margin-bottom: 10px;
+
+    h3 {
+      text-align: center;
+      margin-left: 50px;
+    }
+
+    button {
+      border: none;
+      font-size: 12px;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
   .container {
