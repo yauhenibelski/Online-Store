@@ -6,10 +6,15 @@ interface IDirectory extends IDirectoryBlock {
   directory: string[];
   directoryName: string;
   onChange?(e: FormEvent<HTMLFormElement>): void,
+  directoryType: 'radio' | 'checkbox';
 }
 
 function Directory({
-  directory, directoryName, directoryFilter, setDirectoryFilter,
+  directory,
+  directoryName,
+  directoryFilter,
+  setDirectoryFilter,
+  directoryType,
 }: IDirectory) {
   const getSelectedNames = (e: FormEvent<HTMLFormElement>) => {
     let slCategories = [...e.currentTarget.elements] as HTMLInputElement[];
@@ -18,7 +23,7 @@ function Directory({
     return directoryName === 'Category'
       ? setDirectoryFilter({
         categories: slCategories.map((input) => input.id),
-        brand: directoryFilter.brand,
+        brand: [],
       })
       : setDirectoryFilter({
         brand: slCategories.map((input) => input.id),
@@ -41,10 +46,13 @@ function Directory({
               className={classes.link}
             >
               <input
-                type='checkbox'
+                type={directoryType}
+                name={directoryName}
                 id={name}
               />
-              <label htmlFor={name}>{name}</label>
+              <label htmlFor={name}>
+                {name}
+              </label>
             </div>
           );
         })

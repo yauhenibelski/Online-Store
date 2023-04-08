@@ -1,5 +1,7 @@
 import { getMaxMinPrice } from './helpers/helpers';
 import catalog from '../assets/data/products.json';
 
-export const maxPrice = getMaxMinPrice(catalog, 'maxPrice');
-export const minPrice = getMaxMinPrice(catalog, 'minPrice');
+const { products } = catalog;
+
+export const maxPrice = getMaxMinPrice(products, 'maxPrice');
+export const minPrice = getMaxMinPrice(products, 'minPrice');

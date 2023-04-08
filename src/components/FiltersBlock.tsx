@@ -33,12 +33,12 @@ function FiltersBlock({ sorting, setSorting }: IFiltersBlock) {
           setSorting={setSorting}
         >
           <option value="">Without sorting</option>
-          <option value="priceASC">Sort By: Price ASC</option>
-          <option value="priceDESC">Sort By: Price DESC</option>
-          <option value="ratingASC">Sort By: Rating ASC</option>
-          <option value="ratingDESC">Sort By: Rating DESC</option>
-          <option value="discountASC">Sort By: Discount ASC</option>
-          <option value="discountDESC">Sort By: Discount DESC</option>
+          <option value="price_ASC">Sort By: Price ASC</option>
+          <option value="price_DESC">Sort By: Price DESC</option>
+          <option value="rating_ASC">Sort By: Rating ASC</option>
+          <option value="rating_DESC">Sort By: Rating DESC</option>
+          <option value="discountPercentage_ASC">Sort By: Discount ASC</option>
+          <option value="discountPercentage_DESC">Sort By: Discount DESC</option>
         </CustomSelect>
         <CustomSelect
           name={'show'}

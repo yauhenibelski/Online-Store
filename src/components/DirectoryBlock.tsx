@@ -1,6 +1,6 @@
 import { formatText, getNameDirectory } from '../scripts/helpers/helpers';
 import Directory from './UI/Directory/Directory';
-import products from '../assets/data/products.json';
+import catalog from '../assets/data/products.json';
 
 export interface IDirectoryBlock {
   directoryFilter: {
@@ -15,8 +15,12 @@ export interface IDirectoryBlock {
 }
 
 export function DirectoryBlock({
-  currentBrands, directoryFilter, setDirectoryFilter,
+  currentBrands,
+  directoryFilter,
+  setDirectoryFilter,
 }: IDirectoryBlock) {
+  const { products } = catalog;
+
   return (
     <div>
       <Directory
@@ -25,6 +29,7 @@ export function DirectoryBlock({
         directoryFilter={directoryFilter}
         setDirectoryFilter={setDirectoryFilter}
         currentBrands={currentBrands}
+        directoryType='radio'
       />
       <Directory
         directory={currentBrands.map((brand) => formatText(brand))}
@@ -32,6 +37,7 @@ export function DirectoryBlock({
         directoryFilter={directoryFilter}
         setDirectoryFilter={setDirectoryFilter}
         currentBrands={currentBrands}
+        directoryType='checkbox'
       />
     </div>
   );

@@ -1,8 +1,12 @@
 import { formatText } from '../scripts/helpers/helpers';
+import { Product } from '../scripts/types';
 import Rating from './UI/Rating/Rating';
-import { Products as ProductsType } from '../scripts/types';
 
-function Products({ products }: ProductsType) {
+interface IProducts {
+  products: Product[]
+}
+
+function Products({ products }: IProducts) {
   return (!products.length
     ? <div className='products'>
       <h1 style={{ marginTop: '40%' }}>No products found =(</h1>
