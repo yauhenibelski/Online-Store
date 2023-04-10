@@ -53,8 +53,8 @@ export function sortProducts(products: Product[], sortValue: SortValue) {
     const [sortBy, direction] = sortVal.sortBy.split('_');
 
     const sort = product.sort((a, b) => {
-      const aValue = Object.getOwnPropertyDescriptor(a, sortBy)?.value;
-      const bValue = Object.getOwnPropertyDescriptor(b, sortBy)?.value;
+      const aValue: string = Object.getOwnPropertyDescriptor(a, sortBy)?.value;
+      const bValue: string = Object.getOwnPropertyDescriptor(b, sortBy)?.value;
       return +aValue - +bValue;
     });
 

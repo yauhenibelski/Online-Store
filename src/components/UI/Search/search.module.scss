@@ -5,24 +5,64 @@
   margin-left: 5%;
 
   input {
+    position: relative;
     height: 35px;
     width: 100%;
     padding-left: 30px;
     font-size: 18px;
     border-radius: 31px;
+    box-shadow: 0px 0px 15px 0px rgba(66, 68, 90, 0.17);
+    box-sizing: border-box;
 
     &:focus {
       outline: none;
+      z-index: 4;
     }
   }
+
   &::after {
     content: '';
     position: absolute;
-    top: 8px;
-    right: 0px;
+    top: 6px;
+    right: 20px;
     width: 25px;
     height: 25px;
     background-image: url(./img/gg_search.svg);
     background-size: contain;
   }
+}
+.list {
+  display: none;
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  overflow-y: scroll;
+  box-shadow: 0px 0px 15px 0px rgba(66, 68, 90, 0.395);
+  border-radius: 8px;
+  z-index: 4;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 100%;
+  }
+  &::-webkit-scrollbar-thumb{
+    background-color: #00000034;
+    border-radius: 5px;
+  }
+}
+
+.list_active {
+  display: block;
+}
+.search_active {
+  &::before {
+      content: '';
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 3;
+    }
 }

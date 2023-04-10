@@ -40,24 +40,23 @@ function Directory({
       <div className={classes.name}>
         <h3>{directoryName}</h3>
         {
-          directoryName === 'Brand'
-            ? false
-            : <button
-              onClick={() => {
-                setDirectoryFilter(
-                  {
-                    categories: [],
-                    brand: [],
-                  },
-                );
-                checkedInput.forEach((i) => {
-                  // eslint-disable-next-line no-param-reassign
-                  i.checked = false;
-                });
-              }}
-            >
+          directoryName !== 'Brand'
+          && <button
+            onClick={() => {
+              setDirectoryFilter(
+                {
+                  categories: [],
+                  brand: [],
+                },
+              );
+              checkedInput.forEach((i) => {
+                // eslint-disable-next-line no-param-reassign
+                i.checked = false;
+              });
+            }}
+          >
             See all products
-            </button>
+          </button>
         }
       </div>
       <form
@@ -65,7 +64,7 @@ function Directory({
         onChange={getSelectedNames}
         name={directoryName}
       >
-        {[...directory].map((name:string) => {
+        {[...directory].map((name: string) => {
           return (
             <div
               key={name}
