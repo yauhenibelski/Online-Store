@@ -3,12 +3,19 @@ import classes from './search.module.scss';
 import catalog from '../../../assets/data/products.json';
 import { formatText } from '../../../scripts/helpers/helpers';
 import { Product } from '../../../scripts/types';
+import ProductPopup from '../ProductPopup/ProductPopup';
 
 function Search() {
   const [filter, setFilter] = useState([] as Product[]);
   const [focus, setFocus] = useState(false);
-
+  const [popupVisibility, setPopupVisibility] = useState(false);
   const { products } = catalog;
+  const [selectedProduct, setSelectedProduct] = useState(products[0]);
+
+  const openPopup = (p:Product) => {
+    setPopupVisibility(true);
+    setSelectedProduct(p);
+  };
 
   const listClass = [classes.list];
   const searchClass = [classes.search];
@@ -52,20 +59,28 @@ function Search() {
             </div>
             : filter.map(((p) => {
               return (
-                <div
-                  className='found-product'
-                  key={p.id}
-                  onClick={() => {
-                    console.log(p);
-                    setFocus(false);
-                  }}
-                >
-                  <p>{formatText(p.title)}</p>
-                </div>
+                <>
+                  <div
+                    className='found-product'
+                    key={p.id}
+                    onClick={() => {
+                      openPopup(p);
+                      setFocus(false);
+                    }}
+                  >
+                    <p>{formatText(p.title)}</p>
+                  </div>
+                </>
               );
             }))
         }
       </div>
+      {popupVisibility
+        && <ProductPopup
+          product={selectedProduct}
+          popupVisibility={popupVisibility}
+          setPopupVisibility={setPopupVisibility}/>
+      }
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DirectoryBlock } from '../components/DirectoryBlock';
 import FiltersBlock from '../components/FiltersBlock';
-import Products from '../components/Products';
+import Products from '../components/ProductsBlock';
 import { minPrice, maxPrice } from '../scripts/global_const';
 import { sortProducts } from '../scripts/helpers/helpers';
 import { SortValue } from '../scripts/types';
