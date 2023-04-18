@@ -73,3 +73,22 @@ export function sortProducts(products: Product[], sortValue: SortValue) {
       ? ['No Brands'] : getNameDirectory(category, 'brand'),
   };
 }
+export function showProducts(products: Product[], amountProducts: string) {
+  if (products.length < +amountProducts) {
+    return [products];
+  }
+  const arr: (Product)[][] = [];
+  let q: Product[] = [];
+
+  for (let i = 0, j = 0; i < products.length; i += 1) {
+    if (j < +amountProducts) {
+      q.push(products[i]);
+      j += 1;
+    } else {
+      arr.push(q);
+      q = [];
+      j = 0;
+    }
+  }
+  return [...arr, [...q]];
+}

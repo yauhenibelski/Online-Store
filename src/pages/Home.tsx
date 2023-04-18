@@ -15,7 +15,7 @@ function HomePage() {
 
   const [sorting, setSorting] = useState({
     sortBy: '',
-    show: '',
+    show: '15',
     price: {
       min: minPrice,
       max: maxPrice,
@@ -23,7 +23,6 @@ function HomePage() {
   });
 
   const sortValues: SortValue = Object.assign(directoryFilter, sorting);
-
   const { sortedProducts, currentBrands } = sortProducts(catalog.products, sortValues);
 
   return (
@@ -33,7 +32,10 @@ function HomePage() {
         setDirectoryFilter={setDirectoryFilter}
         currentBrands={currentBrands}
       />
-      <Products products={sortedProducts}/>
+      <Products
+        products={sortedProducts}
+        numberOfProductsPerPage={sortValues.show}
+      />
       <FiltersBlock
         sorting={sorting}
         setSorting={setSorting}
