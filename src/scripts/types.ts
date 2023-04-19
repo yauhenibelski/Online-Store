@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export type Product = {
   id: number;
   title: string;
@@ -29,3 +31,5 @@ export type SortValue = {
     max: number;
   }
 }
+
+export type CartProducts = ReturnType<typeof useState<Product[]>>

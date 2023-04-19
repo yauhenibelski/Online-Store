@@ -1,14 +1,18 @@
 import './styles/index.scss';
+import { useState } from 'react';
 import Header from './components/UI/Header/Sticky-Header';
-import SearchBlok from './components/SearchBlok';
 import HomePage from './pages/Home';
+import { CartProducts } from './scripts/types';
+import Cart from './pages/Cart';
 
 function App() {
+  const cartProducts: CartProducts = useState();
+
   return (
     <>
       <Header/>
-      <SearchBlok/>
-      <HomePage/>
+      <HomePage cartProducts={cartProducts}/>
+      <Cart cartProducts={cartProducts}/>
     </>
   );
 }

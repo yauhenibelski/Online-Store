@@ -1,11 +1,12 @@
 import classes from './product_card.module.scss';
 import { formatText } from '../../../scripts/helpers/helpers';
-import { Product } from '../../../scripts/types';
+import { CartProducts, Product } from '../../../scripts/types';
 import Rating from '../Rating/Rating';
 
 interface IProductCard {
   product: Product,
   click(p:Product): void
+  cartProducts: CartProducts,
 }
 
 function ProductCard({ product, click }: IProductCard) {

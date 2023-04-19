@@ -4,10 +4,15 @@ import FiltersBlock from '../components/FiltersBlock';
 import Products from '../components/ProductsBlock';
 import { minPrice, maxPrice } from '../scripts/global_const';
 import { sortProducts } from '../scripts/helpers/helpers';
-import { SortValue } from '../scripts/types';
+import { CartProducts, SortValue } from '../scripts/types';
 import catalog from '../assets/data/products.json';
+import SearchBlok from '../components/SearchBlok';
 
-function HomePage() {
+interface IHomePage {
+  cartProducts: CartProducts,
+}
+
+function HomePage({ cartProducts }: IHomePage) {
   const [directoryFilter, setDirectoryFilter] = useState({
     categories: [] as string[],
     brand: [] as string[],
@@ -26,21 +31,25 @@ function HomePage() {
   const { sortedProducts, currentBrands } = sortProducts(catalog.products, sortValues);
 
   return (
-    <main>
-      <DirectoryBlock
-        directoryFilter={directoryFilter}
-        setDirectoryFilter={setDirectoryFilter}
-        currentBrands={currentBrands}
-      />
-      <Products
-        products={sortedProducts}
-        numberOfProductsPerPage={sortValues.show}
-      />
-      <FiltersBlock
-        sorting={sorting}
-        setSorting={setSorting}
-      />
-    </main>
+    <>
+      <SearchBlok/>
+      <main>
+        <DirectoryBlock
+          directoryFilter={directoryFilter}
+          setDirectoryFilter={setDirectoryFilter}
+          currentBrands={currentBrands}
+        />
+        <Products
+          products={sortedProducts}
+          numberOfProductsPerPage={sortValues.show}
+          cartProducts={cartProducts}
+        />
+        <FiltersBlock
+          sorting={sorting}
+          setSorting={setSorting}
+        />
+      </main>
+    </>
   );
 }
 export default HomePage;

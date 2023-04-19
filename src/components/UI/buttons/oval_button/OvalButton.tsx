@@ -1,8 +1,8 @@
 import classes from './oval_button.module.scss';
 
 interface Button {
-  children?: React.ReactNode,
-  onClick(e: React.MouseEvent<HTMLButtonElement>): void
+  children: React.ReactNode,
+  onClick?(e: React.MouseEvent<HTMLButtonElement>): void
 }
 
 function OvalButton({ children, onClick }: Button) {
