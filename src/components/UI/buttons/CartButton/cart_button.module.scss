@@ -1,0 +1,24 @@
+.cart_button {
+  position: relative;
+  background-image: url(/components/UI/buttons/CartButton/img/shopping-cart.svg);
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: 0px;
+  margin-left: auto;
+  cursor: pointer;
+}
+.product_counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  color: aliceblue;
+  background-color: #4b8d77d1;
+  width: 20px;
+  height: 20px;
+  top: -5px;
+  right: 17px;
+  border-radius: 50%;
+}

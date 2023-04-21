@@ -32,7 +32,9 @@ function HomePage({ cartProducts }: IHomePage) {
 
   return (
     <>
-      <SearchBlok/>
+      <SearchBlok
+        cartProducts={cartProducts}
+      />
       <main>
         <DirectoryBlock
           directoryFilter={directoryFilter}

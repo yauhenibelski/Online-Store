@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 export type Product = {
   id: number;
@@ -32,4 +32,4 @@ export type SortValue = {
   }
 }
 
-export type CartProducts = ReturnType<typeof useState<Product[]>>
+export type CartProducts = [Product[], Dispatch<SetStateAction<Product[]>>];

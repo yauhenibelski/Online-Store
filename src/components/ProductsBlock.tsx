@@ -39,7 +39,6 @@ function Products({ products, numberOfProductsPerPage, cartProducts }: IProducts
               product={prod}
               key={prod.id}
               click={openPopup}
-              cartProducts={cartProducts}
             />
           );
         })
@@ -48,7 +47,9 @@ function Products({ products, numberOfProductsPerPage, cartProducts }: IProducts
         && <ProductPopup
           product={selectedProduct}
           popupVisibility={popupVisibility}
-          setPopupVisibility={setPopupVisibility}/>
+          setPopupVisibility={setPopupVisibility}
+          cartProducts={cartProducts}
+        />
       }
       {
         products.length > +numberOfProductsPerPage

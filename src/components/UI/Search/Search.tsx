@@ -2,10 +2,14 @@ import { useState } from 'react';
 import classes from './search.module.scss';
 import catalog from '../../../assets/data/products.json';
 import { formatText } from '../../../scripts/helpers/helpers';
-import { Product } from '../../../scripts/types';
+import { CartProducts, Product } from '../../../scripts/types';
 import ProductPopup from '../ProductPopup/ProductPopup';
 
-function Search() {
+interface ISearch {
+  cartProducts: CartProducts,
+}
+
+function Search({ cartProducts }: ISearch) {
   const [filter, setFilter] = useState([] as Product[]);
   const [focus, setFocus] = useState(false);
   const [popupVisibility, setPopupVisibility] = useState(false);
@@ -79,7 +83,9 @@ function Search() {
         && <ProductPopup
           product={selectedProduct}
           popupVisibility={popupVisibility}
-          setPopupVisibility={setPopupVisibility}/>
+          setPopupVisibility={setPopupVisibility}
+          cartProducts={cartProducts}
+        />
       }
     </div>
   );

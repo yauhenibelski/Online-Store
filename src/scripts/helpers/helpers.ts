@@ -92,3 +92,10 @@ export function showProducts(products: Product[], amountProducts: string) {
   }
   return [...arr, [...q]];
 }
+export function getUniqueProducts(products: Product[]) {
+  return products
+    .sort((a, b) => a.id - b.id)
+    .filter((p, i, arr) => (arr[i + 1]
+      ? p.id !== arr[i + 1].id
+      : true));
+}
