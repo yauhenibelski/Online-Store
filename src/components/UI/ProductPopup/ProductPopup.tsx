@@ -3,6 +3,7 @@ import classes from './product_popup.module.scss';
 import Rating from '../Rating/Rating';
 import { CartProducts, Product } from '../../../scripts/types';
 import { formatText } from '../../../scripts/helpers/helpers';
+import CloseButton from '../buttons/CloseButton/CloseButton';
 
 interface IProductPopup {
   product: Product,
@@ -29,6 +30,9 @@ function ProductPopup({ product, setPopupVisibility, cartProducts }: IProductPop
         className={classes.popup_product}
         onClick={(e) => e.stopPropagation()}
       >
+        <div className={classes.close_button}>
+          <CloseButton onClick={() => setPopupVisibility(false)}/>
+        </div>
         <div className={classes.images}>
           <div
             className={classes.current_img}
@@ -53,7 +57,7 @@ function ProductPopup({ product, setPopupVisibility, cartProducts }: IProductPop
             <p>{product.description}</p>
           </div>
           <div className={classes.price_block}>
-            <div>
+            <div className={classes.price}>
               <span>{product.price}$</span>
               <span style={{ marginLeft: '15px' }}><Rating rating={product.rating}/></span>
             </div>

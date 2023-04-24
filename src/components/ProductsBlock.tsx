@@ -23,7 +23,7 @@ function Products({ products, numberOfProductsPerPage, cartProducts }: IProducts
   };
   return (!products.length
     ? <div className='products'>
-      <h1 style={{ marginTop: '30%' }}>No products found =(</h1>
+      <h3 style={{ marginTop: '30%' }}>Products not found with the specified price.</h3>
     </div>
     : <div className='products'>
       {

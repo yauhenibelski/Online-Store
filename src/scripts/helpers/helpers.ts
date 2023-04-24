@@ -99,3 +99,13 @@ export function getUniqueProducts(products: Product[]) {
       ? p.id !== arr[i + 1].id
       : true));
 }
+
+export function getProductQuantityInCart(products: Product[], prod: Product) {
+  return products.reduce((acc, p) => {
+    if (p.id === prod.id) {
+      // eslint-disable-next-line no-param-reassign
+      acc += 1;
+    }
+    return acc;
+  }, 0);
+}

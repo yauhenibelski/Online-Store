@@ -1,19 +1,23 @@
 import { useState } from 'react';
 import { CartProducts, Product } from '../../../scripts/types';
 import classes from './cart_product.module.scss';
+import { getProductQuantityInCart } from '../../../scripts/helpers/helpers';
 
 interface ICartProduct {
   product: Product,
   cartProducts: CartProducts,
+  click(p:Product): void,
 }
 
-function CartProduct({ product, cartProducts }: ICartProduct) {
+function CartProduct({ product, cartProducts, click }: ICartProduct) {
   const [cartProduct, setCartProduct] = cartProducts;
   const [quantity, setQuantity] = useState('');
 
   return (
     <div className={classes.product}>
-      <div className={classes.about_product}>
+      <div
+        onClick={() => click(product)}
+        className={classes.about_product}>
         <img src={product.thumbnail} alt=""/>
         <p>
           {product.title}
@@ -28,7 +32,7 @@ function CartProduct({ product, cartProducts }: ICartProduct) {
         <span className={classes.in_stock}>In stock: {product.stock}</span>
         <input
           type='number'
-          placeholder='1'
+          placeholder={`${getProductQuantityInCart(cartProduct, product)}`}
           value={quantity}
           min='1'
           max={product.stock}

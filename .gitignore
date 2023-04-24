@@ -24,3 +24,4 @@ yarn-error.log*
 
 .eslintrc.json
 custom.d.ts
+404.html

@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import CartProduct from '../components/UI/CartProduct/CartProduct';
 import Logo from '../components/UI/Logo/Logo';
+import ProductPopup from '../components/UI/ProductPopup/ProductPopup';
 import OvalButton from '../components/UI/buttons/oval_button/OvalButton';
 import { getUniqueProducts } from '../scripts/helpers/helpers';
-import { CartProducts } from '../scripts/types';
+import { CartProducts, Product } from '../scripts/types';
 
 interface ICart {
   cartProducts: CartProducts
@@ -10,6 +12,13 @@ interface ICart {
 
 function Cart({ cartProducts }: ICart) {
   const [cartProduct] = cartProducts;
+  const [popupVisibility, setPopupVisibility] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(cartProduct[0]);
+
+  const openPopup = (p: Product) => {
+    setPopupVisibility(true);
+    setSelectedProduct(p);
+  };
 
   const uniqueProducts = getUniqueProducts(cartProduct);
   return (
@@ -30,6 +39,7 @@ function Cart({ cartProducts }: ICart) {
               </div>
               {
                 uniqueProducts.map((p) => <CartProduct
+                  click={openPopup}
                   cartProducts={cartProducts}
                   product={p}
                   key={p.id}
@@ -45,6 +55,14 @@ function Cart({ cartProducts }: ICart) {
               <OvalButton>Proceed to Checkout</OvalButton>
             </div>
           </div>
+      }
+      {popupVisibility
+        && <ProductPopup
+          product={selectedProduct}
+          popupVisibility={popupVisibility}
+          setPopupVisibility={setPopupVisibility}
+          cartProducts={cartProducts}
+        />
       }
     </section>
   );

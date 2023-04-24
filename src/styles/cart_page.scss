@@ -43,4 +43,8 @@
   box-shadow: 0px 0px 15px 0px rgba(66, 68, 90, 0.17);
   background-color: #F5F7FF;
   box-sizing: border-box;
+
+  button {
+    cursor: no-drop;
+  }
 }
