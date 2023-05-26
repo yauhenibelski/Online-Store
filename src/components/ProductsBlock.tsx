@@ -8,12 +8,19 @@ interface IProducts {
   products: Product[],
   numberOfProductsPerPage: string,
   cartProducts: CartProducts,
+  isProductsLoading: boolean,
 }
 
-function Products({ products, numberOfProductsPerPage, cartProducts }: IProducts) {
+function Products({
+  products, numberOfProductsPerPage, cartProducts, isProductsLoading,
+}: IProducts) {
   const [popupVisibility, setPopupVisibility] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
   const [page, setPage] = useState(0);
+
+  const notice = isProductsLoading
+    ? 'Please wait...'
+    : 'Products not found with the specified price.';
 
   const featuredProducts = showProducts(products, numberOfProductsPerPage);
 
@@ -21,38 +28,39 @@ function Products({ products, numberOfProductsPerPage, cartProducts }: IProducts
     setPopupVisibility(true);
     setSelectedProduct(p);
   };
-  return (!products.length
-    ? <div className='products'>
-      <h3 style={{ marginTop: '30%' }}>Products not found with the specified price.</h3>
-    </div>
-    : <div className='products'>
-      {
-        ((prod, n) => (prod.length > n
-          ? prod[n]
-          : (
-            setPage(0),
-            prod[0]
-          ))
-        )(featuredProducts, page).map((prod) => {
-          return (
-            <ProductCard
-              product={prod}
-              key={prod.id}
-              click={openPopup}
-            />
-          );
-        })
-      }
-      {popupVisibility
+  return (
+    !products.length
+      ? <div className='products'>
+        <h3 style={{ marginTop: '30%' }}>{notice}</h3>
+      </div>
+      : <div className='products'>
+        {
+          ((prod, n) => (prod.length > n
+            ? prod[n]
+            : (
+              setPage(0),
+              prod[0]
+            ))
+          )(featuredProducts, page).map((prod) => {
+            return (
+              <ProductCard
+                product={prod}
+                key={prod.id}
+                click={openPopup}
+              />
+            );
+          })
+        }
+        {popupVisibility
         && <ProductPopup
           product={selectedProduct}
           popupVisibility={popupVisibility}
           setPopupVisibility={setPopupVisibility}
           cartProducts={cartProducts}
         />
-      }
-      {
-        products.length > +numberOfProductsPerPage
+        }
+        {
+          products.length > +numberOfProductsPerPage
           && <div
             className='pages'
           >
@@ -69,8 +77,8 @@ function Products({ products, numberOfProductsPerPage, cartProducts }: IProducts
               })
             }
           </div>
-      }
-    </div>
+        }
+      </div>
   );
 }
 export default Products;

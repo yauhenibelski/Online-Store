@@ -8,7 +8,7 @@ import { CartProducts, Product } from './scripts/types';
 import Cart from './pages/Cart';
 
 function App() {
-  const cartProducts: CartProducts = useState([] as Product[]);
+  const cartProducts: CartProducts = useState<Product[]>([]);
 
   return (
     <>

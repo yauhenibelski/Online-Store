@@ -1,21 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DirectoryBlock } from '../components/DirectoryBlock';
 import FiltersBlock from '../components/FiltersBlock';
 import Products from '../components/ProductsBlock';
 import { minPrice, maxPrice } from '../scripts/global_const';
 import { sortProducts } from '../scripts/helpers/helpers';
-import { CartProducts, SortValue } from '../scripts/types';
-import catalog from '../assets/data/products.json';
+import {
+  CartProducts, SortValue, Catalog, Product,
+} from '../scripts/types';
 import SearchBlok from '../components/SearchBlok';
+import { FetchProducts } from '../api/getProducts';
 
 interface IHomePage {
   cartProducts: CartProducts,
 }
 
 function HomePage({ cartProducts }: IHomePage) {
-  const [directoryFilter, setDirectoryFilter] = useState({
-    categories: [] as string[],
-    brand: [] as string[],
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isProductsLoading, setProductsLoading] = useState(false);
+  const [directoryFilter, setDirectoryFilter] = useState<{categories: string[], brand: string[]}>({
+    categories: [],
+    brand: [],
   });
 
   const [sorting, setSorting] = useState({
@@ -27,8 +31,19 @@ function HomePage({ cartProducts }: IHomePage) {
     },
   });
 
+  useEffect(() => {
+    (async () => {
+      setProductsLoading(true);
+      const response: Catalog = await FetchProducts.getAll(+sorting.show);
+      setTimeout(() => {
+        setProducts(response.products);
+        setProductsLoading(false);
+      }, 300);
+    })();
+  }, [sorting]);
+
   const sortValues: SortValue = Object.assign(directoryFilter, sorting);
-  const { sortedProducts, currentBrands } = sortProducts(catalog.products, sortValues);
+  const { sortedProducts, currentBrands } = sortProducts(products, sortValues);
 
   return (
     <>
@@ -42,6 +57,7 @@ function HomePage({ cartProducts }: IHomePage) {
           currentBrands={currentBrands}
         />
         <Products
+          isProductsLoading = {isProductsLoading}
           products={sortedProducts}
           numberOfProductsPerPage={sortValues.show}
           cartProducts={cartProducts}

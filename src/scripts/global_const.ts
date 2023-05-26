@@ -5,3 +5,5 @@ const { products } = catalog;
 
 export const maxPrice = getMaxMinPrice(products, 'maxPrice');
 export const minPrice = getMaxMinPrice(products, 'minPrice');
+
+export const baseUrl = 'https://dummyjson.com/';
