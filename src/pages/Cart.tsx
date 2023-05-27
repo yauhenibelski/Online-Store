@@ -1,26 +1,33 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import CartProduct from '../components/UI/CartProduct/CartProduct';
 import Logo from '../components/UI/Logo/Logo';
 import ProductPopup from '../components/UI/ProductPopup/ProductPopup';
 import OvalButton from '../components/UI/buttons/oval_button/OvalButton';
 import { getUniqueProducts } from '../scripts/helpers/helpers';
-import { CartProducts, Product } from '../scripts/types';
+import { Product } from '../scripts/types';
 
-interface ICart {
-  cartProducts: CartProducts
+if (!localStorage.getItem('products')) {
+  const product: Product[] = [];
+  localStorage.setItem('products', JSON.stringify(product));
 }
 
-function Cart({ cartProducts }: ICart) {
-  const [cartProduct] = cartProducts;
+function Cart() {
+  const cartProducts = useState<Product[]>(JSON.parse(localStorage.getItem('products')!));
+  const [products] = cartProducts;
+
+  useMemo(() => {
+    localStorage.setItem('products', JSON.stringify(products));
+  }, cartProducts);
+
   const [popupVisibility, setPopupVisibility] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(cartProduct[0]);
+  const [selectedProduct, setSelectedProduct] = useState(products[0]);
 
   const openPopup = (p: Product) => {
     setPopupVisibility(true);
     setSelectedProduct(p);
   };
 
-  const uniqueProducts = getUniqueProducts(cartProduct);
+  const uniqueProducts = getUniqueProducts(products);
   return (
     <section className='shopping_cart_wrapper'>
       <div className='head'>
@@ -28,7 +35,7 @@ function Cart({ cartProducts }: ICart) {
         <h2>Shopping Cart</h2>
       </div>
       {
-        !cartProduct.length
+        !products.length
           ? <h1 style={{ textAlign: 'center' }}>Cart is Empty</h1>
           : <div className='shopping_cart'>
             <div className='product_in_cart'>
@@ -48,9 +55,9 @@ function Cart({ cartProducts }: ICart) {
             </div>
             <div className='summary'>
               <h3>Summary</h3>
-              <p>Products: {cartProduct.length}</p>
+              <p>Products: {products.length}</p>
               <hr/>
-              <p>Total: {cartProduct.reduce((acc, p) => acc + p.price, 0)}$</p>
+              <p>Total: {products.reduce((acc, p) => acc + p.price, 0)}$</p>
               <hr/>
               <OvalButton>Proceed to Checkout</OvalButton>
             </div>

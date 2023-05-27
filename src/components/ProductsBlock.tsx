@@ -6,13 +6,13 @@ import { showProducts } from '../scripts/helpers/helpers';
 
 interface IProducts {
   products: Product[],
-  numberOfProductsPerPage: string,
+  pageLimit: number,
   cartProducts: CartProducts,
   isProductsLoading: boolean,
 }
 
 function Products({
-  products, numberOfProductsPerPage, cartProducts, isProductsLoading,
+  products, pageLimit, cartProducts, isProductsLoading,
 }: IProducts) {
   const [popupVisibility, setPopupVisibility] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
@@ -22,7 +22,7 @@ function Products({
     ? 'Please wait...'
     : 'Products not found with the specified price.';
 
-  const featuredProducts = showProducts(products, numberOfProductsPerPage);
+  const featuredProducts = showProducts(products, `${pageLimit}`);
 
   const openPopup = (p: Product) => {
     setPopupVisibility(true);
@@ -35,12 +35,13 @@ function Products({
       </div>
       : <div className='products'>
         {
-          ((prod, n) => (prod.length > n
-            ? prod[n]
-            : (
-              setPage(0),
-              prod[0]
-            ))
+          ((prod, n) => (
+            prod.length > n
+              ? prod[n]
+              : (
+                setPage(0),
+                prod[0]
+              ))
           )(featuredProducts, page).map((prod) => {
             return (
               <ProductCard
@@ -60,7 +61,7 @@ function Products({
         />
         }
         {
-          products.length > +numberOfProductsPerPage
+          products.length > +pageLimit
           && <div
             className='pages'
           >
@@ -70,7 +71,7 @@ function Products({
                   <span key={`${i}`} onClick={() => {
                     setPage(i);
                   }}>
-                    <input type="radio" name='page' id={`${i}`}/>
+                    <input type="radio" name='page' id={`${i}`} defaultChecked={i === page}/>
                     <label htmlFor={`${i}`}>{i + 1}</label>
                   </span>
                 );

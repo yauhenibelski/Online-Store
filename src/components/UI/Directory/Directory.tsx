@@ -16,7 +16,7 @@ function Directory({
   setDirectoryFilter,
   directoryType,
 }: IDirectory) {
-  const [checkedInput, setFormValue] = useState([] as HTMLInputElement[]);
+  const [checkedInput, setFormValue] = useState<HTMLInputElement[]>([]);
 
   const getSelectedNames = (e: FormEvent<HTMLFormElement>) => {
     let slCategories = [...e.currentTarget.elements] as HTMLInputElement[];
