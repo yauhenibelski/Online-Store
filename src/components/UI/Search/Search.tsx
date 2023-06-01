@@ -1,19 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './search.module.scss';
-import catalog from '../../../assets/data/products.json';
 import { formatText } from '../../../scripts/helpers/helpers';
-import { CartProducts, Product } from '../../../scripts/types';
 import ProductPopup from '../ProductPopup/ProductPopup';
+import { Catalog, Product } from '../../../scripts/types';
+import { FetchProducts } from '../../../api/getProducts';
 
-interface ISearch {
-  cartProducts: CartProducts,
-}
-
-function Search({ cartProducts }: ISearch) {
+function Search() {
   const [filter, setFilter] = useState([] as Product[]);
   const [focus, setFocus] = useState(false);
   const [popupVisibility, setPopupVisibility] = useState(false);
-  const { products } = catalog;
+  const [products, setProducts] = useState<Product[]>([]);
+  useEffect(() => {
+    (async () => {
+      const response: Catalog = await FetchProducts.getAll();
+      setTimeout(() => {
+        setProducts(response.products);
+      }, 300);
+    })();
+  }, []);
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
 
   const openPopup = (p:Product) => {
@@ -84,7 +88,6 @@ function Search({ cartProducts }: ISearch) {
           product={selectedProduct}
           popupVisibility={popupVisibility}
           setPopupVisibility={setPopupVisibility}
-          cartProducts={cartProducts}
         />
       }
     </div>

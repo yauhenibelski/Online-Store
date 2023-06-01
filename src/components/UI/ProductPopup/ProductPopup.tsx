@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
 import classes from './product_popup.module.scss';
 import Rating from '../Rating/Rating';
@@ -9,11 +11,10 @@ interface IProductPopup {
   product: Product,
   popupVisibility: boolean,
   setPopupVisibility: React.Dispatch<React.SetStateAction<boolean>>,
-  cartProducts: CartProducts,
 }
 
-function ProductPopup({ product, setPopupVisibility, cartProducts }: IProductPopup) {
-  const [cartProduct, setCartProduct] = cartProducts;
+function ProductPopup({ product, setPopupVisibility }: IProductPopup) {
+  // const [cartProduct, setCartProduct] = cartProducts;
 
   const productImg = [...product.images];
 
@@ -61,7 +62,7 @@ function ProductPopup({ product, setPopupVisibility, cartProducts }: IProductPop
               <span>{product.price}$</span>
               <span style={{ marginLeft: '15px' }}><Rating rating={product.rating}/></span>
             </div>
-            <button className={classes.add_to_cart}
+            {/* <button className={classes.add_to_cart}
               onClick={() => {
                 const productIndex = cartProduct.findIndex((p) => p.id === product.id);
 
@@ -75,7 +76,7 @@ function ProductPopup({ product, setPopupVisibility, cartProducts }: IProductPop
               }}
             >
               {cartProduct?.includes(product) ? 'Drop from cart' : 'Add to cart'}
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

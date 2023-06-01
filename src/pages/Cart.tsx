@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CartProduct from '../components/UI/CartProduct/CartProduct';
 import Logo from '../components/UI/Logo/Logo';
 import ProductPopup from '../components/UI/ProductPopup/ProductPopup';
@@ -15,7 +15,7 @@ function Cart() {
   const cartProducts = useState<Product[]>(JSON.parse(localStorage.getItem('products')!));
   const [products] = cartProducts;
 
-  useMemo(() => {
+  useEffect(() => {
     localStorage.setItem('products', JSON.stringify(products));
   }, cartProducts);
 
@@ -68,7 +68,6 @@ function Cart() {
           product={selectedProduct}
           popupVisibility={popupVisibility}
           setPopupVisibility={setPopupVisibility}
-          cartProducts={cartProducts}
         />
       }
     </section>

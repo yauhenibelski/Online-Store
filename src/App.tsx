@@ -1,5 +1,3 @@
-import './styles/index.scss';
-
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/UI/Header/Sticky-Header';
 import HomePage from './pages/Home';

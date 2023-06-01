@@ -2,24 +2,11 @@ import Range from './UI/Range/Range';
 import OvalButton from './UI/buttons/oval_button/OvalButton';
 import CustomSelect from './UI/custom_select/CustomSelect';
 import { maxPrice, minPrice } from '../scripts/global_const';
+import { SortValue } from '../scripts/types';
 
 export interface IFiltersBlock {
-  sorting: {
-    sortBy: string;
-    show: string;
-    price: {
-      min: number;
-      max: number;
-    };
-  }
-  setSorting: React.Dispatch<React.SetStateAction<{
-    sortBy: string;
-    show: string;
-    price: {
-      min: number;
-      max: number;
-    };
-  }>>,
+  sorting: SortValue,
+  setSorting: React.Dispatch<React.SetStateAction<SortValue>>,
 }
 
 function FiltersBlock({ sorting, setSorting }: IFiltersBlock) {
@@ -32,10 +19,10 @@ function FiltersBlock({ sorting, setSorting }: IFiltersBlock) {
             setSorting({
               show: '15',
               sortBy: '',
-              price: {
-                min: minPrice,
-                max: maxPrice,
-              },
+              maxPrice,
+              minPrice,
+              categories: sorting.categories,
+              brand: sorting.brand,
             });
           }}
         >

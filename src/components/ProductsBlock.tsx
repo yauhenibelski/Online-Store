@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CartProducts, Product } from '../scripts/types';
+import { Product } from '../scripts/types';
 import ProductCard from './UI/ProductCard/ProductCard';
 import ProductPopup from './UI/ProductPopup/ProductPopup';
 import { showProducts } from '../scripts/helpers/helpers';
@@ -7,20 +7,14 @@ import { showProducts } from '../scripts/helpers/helpers';
 interface IProducts {
   products: Product[],
   pageLimit: number,
-  cartProducts: CartProducts,
-  isProductsLoading: boolean,
 }
 
 function Products({
-  products, pageLimit, cartProducts, isProductsLoading,
+  products, pageLimit,
 }: IProducts) {
   const [popupVisibility, setPopupVisibility] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
   const [page, setPage] = useState(0);
-
-  const notice = isProductsLoading
-    ? 'Please wait...'
-    : 'Products not found with the specified price.';
 
   const featuredProducts = showProducts(products, `${pageLimit}`);
 
@@ -31,7 +25,7 @@ function Products({
   return (
     !products.length
       ? <div className='products'>
-        <h3 style={{ marginTop: '30%' }}>{notice}</h3>
+        <h3 style={{ marginTop: '30%' }}>'Products not found with the specified price.'</h3>
       </div>
       : <div className='products'>
         {
@@ -57,10 +51,9 @@ function Products({
           product={selectedProduct}
           popupVisibility={popupVisibility}
           setPopupVisibility={setPopupVisibility}
-          cartProducts={cartProducts}
         />
         }
-        {
+        {/* {
           products.length > +pageLimit
           && <div
             className='pages'
@@ -78,7 +71,7 @@ function Products({
               })
             }
           </div>
-        }
+        } */}
       </div>
   );
 }

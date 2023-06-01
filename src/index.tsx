@@ -1,12 +1,33 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
+import './styles/index.scss';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Header from './components/UI/Header/Sticky-Header';
+import HomePage from './pages/Home';
+import Cart from './pages/Cart';
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement,
-);
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Header/>,
+    children: [
+      {
+        path: '/',
+        element: <HomePage/>,
+        children: [
+          {
+            path: '/:cart',
+            element: <HomePage/>,
+          },
+        ],
+      },
+      {
+        path: '/cart',
+        element: <Cart/>,
+      },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <RouterProvider router={router} />,
 );

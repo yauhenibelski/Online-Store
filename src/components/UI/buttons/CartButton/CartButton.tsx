@@ -1,18 +1,26 @@
 import { NavLink } from 'react-router-dom';
-import { CartProducts } from '../../../../scripts/types';
+// import { useState, useEffect } from 'react';
 import classes from './cart_button.module.scss';
+// import { FetchProducts } from '../../../../api/getProducts';
+// import { Product, Catalog } from '../../../../scripts/types';
 
-interface ICartButton {
-  cartProducts: CartProducts,
-}
-function CartButton({ cartProducts }: ICartButton) {
+function CartButton() {
+  // const [products, setProducts] = useState<Product[]>([]);
+  // useEffect(() => {
+  //   (async () => {
+  //     const response: Catalog = await FetchProducts.getAll();
+  //     setTimeout(() => {
+  //       setProducts(response.products);
+  //     }, 300);
+  //   })();
+  // }, []);
   return (
     <NavLink to="/cart" className={classes.cart_button}>
-      {!!cartProducts[0].length
+      {/* {!!products[0].length
         && <div className={classes.product_counter}>
-          {cartProducts[0].length}
+          {products[0].length}
         </div>
-      }
+      } */}
     </NavLink>
   );
 }

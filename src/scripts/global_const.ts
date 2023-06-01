@@ -1,9 +1,6 @@
-import { getMaxMinPrice } from './helpers/helpers';
-import catalog from '../assets/data/products.json';
+// import { getMaxMinPrice } from './helpers/helpers';
 
-const { products } = catalog;
-
-export const maxPrice = getMaxMinPrice(products, 'maxPrice');
-export const minPrice = getMaxMinPrice(products, 'minPrice');
+export const maxPrice = 10000;
+export const minPrice = 10;
 
 export const baseUrl = 'https://dummyjson.com/';

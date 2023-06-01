@@ -3,8 +3,8 @@ import { IFiltersBlock } from '../../FiltersBlock';
 import { maxPrice, minPrice } from '../../../scripts/global_const';
 
 function Range({ sorting, setSorting }: IFiltersBlock) {
-  const { min } = sorting.price;
-  const { max } = sorting.price;
+  const min = sorting.minPrice;
+  const max = sorting.maxPrice;
 
   return (
     <div className={classes.wrapper}>

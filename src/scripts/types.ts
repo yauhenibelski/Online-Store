@@ -26,10 +26,8 @@ export type SortValue = {
   brand: string[];
   sortBy: string;
   show: string;
-  price: {
-    min: number;
-    max: number;
-  }
+  minPrice: number;
+  maxPrice: number;
 }
 
 export type CartProducts = [Product[], Dispatch<SetStateAction<Product[]>>];
