@@ -1,10 +1,15 @@
+import { useContext } from 'react';
 import classes from './range.module.scss';
-import { IFiltersBlock } from '../../FiltersBlock';
-import { maxPrice, minPrice } from '../../../scripts/global_const';
+import { Context } from '../../../pages/Home';
 
-function Range({ sorting, setSorting }: IFiltersBlock) {
-  const min = sorting.minPrice;
-  const max = sorting.maxPrice;
+function Range() {
+  const context = useContext(Context);
+  const {
+    maxPriceInCatalog,
+    minPriceInCatalog,
+    sorting,
+  } = context;
+  const setSorting = context.setSorting!;
 
   return (
     <div className={classes.wrapper}>
@@ -14,53 +19,49 @@ function Range({ sorting, setSorting }: IFiltersBlock) {
           <input
             type="range"
             onChange={(e) => {
-              if (+e.currentTarget.value >= max) {
-                e.currentTarget.value = `${max}`;
+              const sortPriceMax = sorting?.sortPriceMax as number;
+              const sort = sorting!;
+              if (+e.currentTarget.value >= sortPriceMax) {
+                e.currentTarget.value = `${sortPriceMax}`;
               }
-              setSorting(
-                Object.defineProperty({ ...sorting }, 'price', {
-                  value: {
-                    max,
-                    min: e.currentTarget.value,
-                  },
-                }),
-              );
+              setSorting({
+                ...sort,
+                sortPriceMin: +e.currentTarget.value,
+              });
             }}
             style={{
               height: 0,
               zIndex: 1,
             }}
-            value={min}
-            min={minPrice}
-            max={maxPrice}
+            value={sorting?.sortPriceMin}
+            min={minPriceInCatalog}
+            max={maxPriceInCatalog}
           />
           <input
             id="toSlider"
             type="range"
             onChange={(e) => {
-              if (+e.currentTarget.value <= min) {
-                e.currentTarget.value = `${min}`;
+              const sortPriceMin = sorting?.sortPriceMin as number;
+              const sort = sorting!;
+              if (+e.currentTarget.value <= sortPriceMin) {
+                e.currentTarget.value = `${sortPriceMin}`;
               }
-              setSorting(
-                Object.defineProperty({ ...sorting }, 'price', {
-                  value: {
-                    min,
-                    max: e.currentTarget.value,
-                  },
-                }),
-              );
+              setSorting({
+                ...sort,
+                sortPriceMax: +e.currentTarget.value,
+              });
             }}
-            value={max}
-            min={minPrice}
-            max={maxPrice}
+            value={sorting?.sortPriceMax}
+            min={minPriceInCatalog}
+            max={maxPriceInCatalog}
           />
         </div>
         <div className={classes.form_control}>
           <div>
-            <p>Min: {min}$</p>
+            <p>Min: {sorting?.sortPriceMin}$</p>
           </div>
           <div>
-            <p>Max: {max}$</p>
+            <p>Max: {sorting?.sortPriceMax}$</p>
           </div>
         </div>
       </div>

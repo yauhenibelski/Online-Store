@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
+import { useContext } from 'react';
 import { formatText, getNameDirectory } from '../scripts/helpers/helpers';
 import { Product } from '../scripts/types';
 import Directory from './UI/Directory/Directory';
+import { Context } from '../pages/Home';
 
 export interface IDirectoryBlock {
   currentBrands: string[],
@@ -10,6 +12,8 @@ export interface IDirectoryBlock {
 
 export function DirectoryBlock({ currentBrands, products }: IDirectoryBlock) {
   const categories = getNameDirectory(products, 'category');
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const context = useContext(Context);
   return (
     <div>
       <Directory directoryName='Category'>

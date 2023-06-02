@@ -53,7 +53,7 @@ function Products({
           setPopupVisibility={setPopupVisibility}
         />
         }
-        {/* {
+        {
           products.length > +pageLimit
           && <div
             className='pages'
@@ -71,7 +71,7 @@ function Products({
               })
             }
           </div>
-        } */}
+        }
       </div>
   );
 }
