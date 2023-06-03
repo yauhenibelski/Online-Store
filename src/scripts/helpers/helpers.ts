@@ -46,8 +46,8 @@ export function sortProducts(products: Product[], sortValue: SortValue) {
       : sortValue.brand.includes(formatText(p.brand));
   });
 
-  const productsFilteredByPrice = [...brand.filter((p) => p.price >= sortValue.sortPriceMin
-    && p.price <= sortValue.sortPriceMax)];
+  const productsFilteredByPrice = [...brand.filter((p) => p.price >= sortValue.minPrice
+    && p.price <= sortValue.maxPrice)];
 
   const sortedProducts = (product: Product[], sortVal: SortValue) => {
     const [sortBy, direction] = sortVal.sortBy.split('_');

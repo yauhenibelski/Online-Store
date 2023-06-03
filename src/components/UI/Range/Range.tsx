@@ -1,8 +1,11 @@
+/* eslint-disable no-unused-expressions */
 import { useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import classes from './range.module.scss';
 import { Context } from '../../../pages/Home';
 
 function Range() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const context = useContext(Context);
   const {
     maxPriceInCatalog,
@@ -19,21 +22,28 @@ function Range() {
           <input
             type="range"
             onChange={(e) => {
-              const sortPriceMax = sorting?.sortPriceMax as number;
-              const sort = sorting!;
-              if (+e.currentTarget.value >= sortPriceMax) {
-                e.currentTarget.value = `${sortPriceMax}`;
+              const sortPriceMax = sorting?.maxPrice as number;
+              let rangeValue = e.currentTarget.value;
+
+              if (+rangeValue >= sortPriceMax) {
+                rangeValue = `${sortPriceMax}`;
               }
               setSorting({
-                ...sort,
-                sortPriceMin: +e.currentTarget.value,
+                ...sorting!,
+                minPrice: +rangeValue,
               });
+
+              searchParams.has('minPrice')
+                ? searchParams.set('minPrice', rangeValue)
+                : searchParams.append('minPrice', rangeValue);
+
+              setSearchParams(searchParams);
             }}
             style={{
               height: 0,
               zIndex: 1,
             }}
-            value={sorting?.sortPriceMin}
+            value={sorting?.minPrice}
             min={minPriceInCatalog}
             max={maxPriceInCatalog}
           />
@@ -41,27 +51,33 @@ function Range() {
             id="toSlider"
             type="range"
             onChange={(e) => {
-              const sortPriceMin = sorting?.sortPriceMin as number;
-              const sort = sorting!;
-              if (+e.currentTarget.value <= sortPriceMin) {
-                e.currentTarget.value = `${sortPriceMin}`;
+              const sortPriceMin = sorting?.minPrice as number;
+              let rangeValue = e.currentTarget.value;
+
+              if (+rangeValue <= sortPriceMin) {
+                rangeValue = `${sortPriceMin}`;
               }
               setSorting({
-                ...sort,
-                sortPriceMax: +e.currentTarget.value,
+                ...sorting!,
+                maxPrice: +rangeValue,
               });
+              searchParams.has('maxPrice')
+                ? searchParams.set('maxPrice', rangeValue)
+                : searchParams.append('maxPrice', rangeValue);
+
+              setSearchParams(searchParams);
             }}
-            value={sorting?.sortPriceMax}
+            value={sorting?.maxPrice}
             min={minPriceInCatalog}
             max={maxPriceInCatalog}
           />
         </div>
         <div className={classes.form_control}>
           <div>
-            <p>Min: {sorting?.sortPriceMin}$</p>
+            <p>Min: {sorting?.minPrice}$</p>
           </div>
           <div>
-            <p>Max: {sorting?.sortPriceMax}$</p>
+            <p>Max: {sorting?.maxPrice}$</p>
           </div>
         </div>
       </div>

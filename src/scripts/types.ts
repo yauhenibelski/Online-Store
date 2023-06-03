@@ -26,14 +26,14 @@ export type SortValue = {
   brand: string[];
   sortBy: string;
   pageLimit: string;
-  sortPriceMin: number;
-  sortPriceMax: number;
+  minPrice: number;
+  maxPrice: number;
 }
 export type ContextType ={
-  minPriceInCatalog?: number,
-  maxPriceInCatalog?: number,
-  products?: Product[],
-  sorting?: SortValue,
-  setSorting?: React.Dispatch<React.SetStateAction<SortValue>>,
+  readonly minPriceInCatalog?: number,
+  readonly maxPriceInCatalog?: number,
+  readonly products?: Product[],
+  readonly sorting?: SortValue,
+  readonly setSorting?: React.Dispatch<React.SetStateAction<SortValue>>,
 }
 export type CartProducts = [Product[], Dispatch<SetStateAction<Product[]>>];

@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useSearchParams } from 'react-router-dom';
 import { DirectoryBlock } from '../components/DirectoryBlock';
 import FiltersBlock from '../components/FiltersBlock';
 import Products from '../components/ProductsBlock';
@@ -16,14 +16,15 @@ function HomePage() {
   const categoryLoader = useLoaderData() as { category: string };
   const [products, setProducts] = useState<Product[]>([]);
   const [cartProducts] = useState<Product[]>(JSON.parse(localStorage.getItem('products')!));
+  const [searchParams] = useSearchParams();
   // const [isProductsLoading, setProductsLoading] = useState(false);
   const [sorting, setSorting] = useState<SortValue>({
     categories: categoryLoader ? [categoryLoader.category] : [],
     brand: [],
     sortBy: '',
     pageLimit: '15',
-    sortPriceMin: 0,
-    sortPriceMax: 0,
+    minPrice: searchParams.has('minPrice') ? +searchParams.get('minPrice')! : 0,
+    maxPrice: searchParams.has('maxPrice') ? +searchParams.get('maxPrice')! : 0,
   });
 
   useEffect(() => {
@@ -38,8 +39,8 @@ function HomePage() {
         setProducts(response.products);
         setSorting({
           ...sorting,
-          sortPriceMax: getMaxMinPrice(response.products, 'maxPrice'),
-          sortPriceMin: getMaxMinPrice(response.products, 'minPrice'),
+          maxPrice: sorting.maxPrice > 0 ? sorting.maxPrice : getMaxMinPrice(response.products, 'maxPrice'),
+          minPrice: sorting.minPrice > 0 ? sorting.minPrice : getMaxMinPrice(response.products, 'minPrice'),
         });
         // setProductsLoading(false);
       }, 300);
