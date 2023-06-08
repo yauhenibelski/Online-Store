@@ -11,11 +11,9 @@ function Directory({ directoryName, children }: IDirectory) {
       <div className={classes.name}>
         <h3>{directoryName}</h3>
       </div>
-      <form
-        className={classes.container}
-      >
+      <div className={classes.container}>
         {children}
-      </form>
+      </div>
     </div>
   );
 }

@@ -7,17 +7,12 @@ import Cart from './pages/Cart';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '',
     element: <Header/>,
     children: [
       {
         path: '/',
         element: <HomePage/>,
-      },
-      {
-        path: '/:category',
-        element: <HomePage/>,
-        loader: ({ params }) => params,
       },
       {
         path: '/cart',

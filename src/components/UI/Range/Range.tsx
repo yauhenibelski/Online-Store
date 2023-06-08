@@ -37,6 +37,10 @@ function Range() {
                 ? searchParams.set('minPrice', rangeValue)
                 : searchParams.append('minPrice', rangeValue);
 
+              if (searchParams.get('minPrice') === `${minPriceInCatalog}`) {
+                searchParams.delete('minPrice');
+              }
+
               setSearchParams(searchParams);
             }}
             style={{
@@ -64,6 +68,10 @@ function Range() {
               searchParams.has('maxPrice')
                 ? searchParams.set('maxPrice', rangeValue)
                 : searchParams.append('maxPrice', rangeValue);
+
+              if (searchParams.get('maxPrice') === `${maxPriceInCatalog}`) {
+                searchParams.delete('maxPrice');
+              }
 
               setSearchParams(searchParams);
             }}

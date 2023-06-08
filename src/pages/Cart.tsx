@@ -66,8 +66,8 @@ function Cart() {
       {popupVisibility
         && <ProductPopup
           product={selectedProduct}
-          popupVisibility={popupVisibility}
-          setPopupVisibility={setPopupVisibility}
+          onClick={() => { setPopupVisibility(false); }}
+          cartProduct={cartProducts}
         />
       }
     </section>

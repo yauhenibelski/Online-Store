@@ -1,5 +1,7 @@
-import { NavLink } from 'react-router-dom';
+/* eslint-disable no-unused-expressions */
+import { useSearchParams } from 'react-router-dom';
 import { useContext } from 'react';
+import { Clipboard } from 'ts-clipboard';
 import { formatText, getNameDirectory } from '../scripts/helpers/helpers';
 import { Product } from '../scripts/types';
 import Directory from './UI/Directory/Directory';
@@ -12,21 +14,37 @@ export interface IDirectoryBlock {
 
 export function DirectoryBlock({ currentBrands, products }: IDirectoryBlock) {
   const categories = getNameDirectory(products, 'category');
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const context = useContext(Context);
+  const { sorting, setSorting } = useContext(Context);
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
-    <div>
+    <div className='directory-wrapper'>
+      <button
+        className='copy-link'
+        onClick={() => { Clipboard.copy(document.location.href); }}
+      >Copy link</button>
       <Directory directoryName='Category'>
         {
           categories.map((category) => {
             return <div className='link__directory'
               key={category}>
-              <NavLink
-                to={`/${category}`}
-                className={({ isActive }) => (isActive ? 'active-link link' : 'link') }
+              <div
+                className={sorting?.categories.includes(category) ? 'active-link link' : 'link'}
+                onClick={() => {
+                  setSorting!({
+                    ...sorting!,
+                    categories: [category],
+                    brand: [],
+                  });
+                  searchParams.has('category')
+                    ? searchParams.set('category', category)
+                    : searchParams.append('category', category);
+
+                  searchParams.delete('brand');
+                  setSearchParams(searchParams);
+                }}
               >
                 {category}
-              </NavLink>
+              </div>
             </div>;
           })
         }
@@ -34,20 +52,45 @@ export function DirectoryBlock({ currentBrands, products }: IDirectoryBlock) {
 
       <Directory directoryName='Brand'>
         {
-          currentBrands.map((brandName) => {
-            const brand = formatText(brandName);
+          currentBrands.map((brand) => {
+            const brandName = formatText(brand);
             return (
               <div
-                key={brand}
+                key={brandName}
                 className='link__directory'
               >
                 <input
                   type='checkbox'
+                  checked={sorting?.brand.includes(brand)}
+                  onChange={(e) => {
+                    if (e.currentTarget.checked) {
+                      setSorting!({
+                        ...sorting!,
+                        brand: [...sorting!.brand, brand],
+                      });
+                      searchParams.has('brand') && sorting?.brand.length
+                        ? searchParams.set('brand', [...sorting!.brand, brand].join(','))
+                        : searchParams.append('brand', brand);
+
+                      setSearchParams(searchParams);
+                    } else {
+                      setSorting!({
+                        ...sorting!,
+                        brand: [...sorting!.brand.filter((b) => b !== brandName)],
+                      });
+
+                      sorting!.brand.length < 2
+                        ? searchParams.delete('brand')
+                        : searchParams.set('brand', [sorting!.brand.filter((b) => b !== brand)].join(','));
+                      setSearchParams(searchParams);
+                    }
+                  }}
+                  value={brand}
                   name={brand}
                   id={brand}
                 />
                 <label htmlFor={brand}>
-                  {brand}
+                  {brandName}
                 </label>
               </div>
             );

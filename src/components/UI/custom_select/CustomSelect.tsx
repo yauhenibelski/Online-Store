@@ -1,14 +1,17 @@
+/* eslint-disable no-unused-expressions */
+import { useContext } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import classes from './custom_select.module.scss';
-import { IFiltersBlock } from '../../FiltersBlock';
+import { Context } from '../../../pages/Home';
 
-interface ICustomSelect extends IFiltersBlock {
+interface ICustomSelect {
   children: React.ReactNode;
   name: string;
 }
 
-function CustomSelect({
-  children, name, sorting, setSorting,
-}: ICustomSelect) {
+function CustomSelect({ children, name }: ICustomSelect) {
+  const { sorting, setSorting } = useContext(Context);
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <select
       className={classes.s}
@@ -17,9 +20,21 @@ function CustomSelect({
       }
       name={name}
       onChange={(e) => {
-        return setSorting(
-          Object.defineProperty({ ...sorting }, name, { value: e.currentTarget.value }),
-        );
+        const { value } = e.currentTarget;
+        if (sorting && setSorting) {
+          setSorting(
+            Object.defineProperty({ ...sorting }, name, { value }),
+          );
+        }
+        searchParams.has(name)
+          ? searchParams.set(name, value)
+          : searchParams.append(name, value);
+
+        if (searchParams.get(name) === '') {
+          searchParams.delete(name);
+        }
+
+        setSearchParams(searchParams);
       }}
     >
       {children}

@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import classes from './search.module.scss';
 import { formatText } from '../../../scripts/helpers/helpers';
 import ProductPopup from '../ProductPopup/ProductPopup';
 import { Catalog, Product } from '../../../scripts/types';
 import { FetchProducts } from '../../../api/getProducts';
+import { Context } from '../../../pages/Home';
 
 function Search() {
   const [filter, setFilter] = useState([] as Product[]);
   const [focus, setFocus] = useState(false);
   const [popupVisibility, setPopupVisibility] = useState(false);
   const [products, setProducts] = useState<Product[]>([]);
+  const cartProducts = useContext(Context).cartProducts!;
+  const [searchParams, setSearchParams] = useSearchParams();
   useEffect(() => {
     (async () => {
       const response: Catalog = await FetchProducts.getAll();
@@ -67,18 +71,19 @@ function Search() {
             </div>
             : filter.map(((p) => {
               return (
-                <>
+                <div key={p.id}>
                   <div
                     className='found-product'
-                    key={p.id}
                     onClick={() => {
+                      searchParams.append('id', `${p.id}`);
+                      setSearchParams(searchParams);
                       openPopup(p);
                       setFocus(false);
                     }}
                   >
                     <p>{formatText(p.title)}</p>
                   </div>
-                </>
+                </div>
               );
             }))
         }
@@ -86,8 +91,12 @@ function Search() {
       {popupVisibility
         && <ProductPopup
           product={selectedProduct}
-          popupVisibility={popupVisibility}
-          setPopupVisibility={setPopupVisibility}
+          onClick={() => {
+            searchParams.delete('id');
+            setSearchParams(searchParams);
+            setPopupVisibility(false);
+          }}
+          cartProduct={cartProducts}
         />
       }
     </div>

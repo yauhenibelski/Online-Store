@@ -1,3 +1,4 @@
+import { useSearchParams } from 'react-router-dom';
 import classes from './product_card.module.scss';
 import { formatText } from '../../../scripts/helpers/helpers';
 import { Product } from '../../../scripts/types';
@@ -9,9 +10,14 @@ interface IProductCard {
 }
 
 function ProductCard({ product, click }: IProductCard) {
+  const [searchParams, setSearchParams] = useSearchParams();
   return (
     <div className={classes.p}
-      onClick={() => click(product)}
+      onClick={() => {
+        click(product);
+        searchParams.append('id', `${product.id}`);
+        setSearchParams(searchParams);
+      }}
     >
       <div
         style={ { backgroundImage: `url(${product.thumbnail})` }}
@@ -27,12 +33,6 @@ function ProductCard({ product, click }: IProductCard) {
         <Rating rating={product.rating}/>
         <p className={classes.price}>{product.price}$</p>
       </div>
-      {/* <div className={classes.buttons_block}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <button className={classes.show}>Show</button>
-        <button className={classes.add_to_cart}>Add to cart</button>
-      </div> */}
     </div>
 
   );

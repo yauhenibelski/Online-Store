@@ -1,38 +1,38 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import classes from './product_popup.module.scss';
 import Rating from '../Rating/Rating';
-import { CartProducts, Product } from '../../../scripts/types';
+import { Product } from '../../../scripts/types';
 import { formatText } from '../../../scripts/helpers/helpers';
 import CloseButton from '../buttons/CloseButton/CloseButton';
 
 interface IProductPopup {
   product: Product,
-  popupVisibility: boolean,
-  setPopupVisibility: React.Dispatch<React.SetStateAction<boolean>>,
+  cartProduct: [Product[], React.Dispatch<React.SetStateAction<Product[]>>],
+  onClick: (e?: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-function ProductPopup({ product, setPopupVisibility }: IProductPopup) {
-  // const [cartProduct, setCartProduct] = cartProducts;
-
+function ProductPopup({ product, cartProduct, onClick }: IProductPopup) {
+  const [cartProducts, setCartProducts] = cartProduct;
   const productImg = [...product.images];
-
   const [selectImg, setSelectImg] = useState(product.thumbnail);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <div
       className={classes.popup_wrapper}
-      onClick={() => {
-        setPopupVisibility(false);
-      }}
+      onClick={onClick}
     >
       <div
         className={classes.popup_product}
         onClick={(e) => e.stopPropagation()}
       >
         <div className={classes.close_button}>
-          <CloseButton onClick={() => setPopupVisibility(false)}/>
+          <CloseButton onClick={() => {
+            searchParams.delete('id');
+            setSearchParams(searchParams);
+            onClick();
+          }}/>
         </div>
         <div className={classes.images}>
           <div
@@ -62,21 +62,21 @@ function ProductPopup({ product, setPopupVisibility }: IProductPopup) {
               <span>{product.price}$</span>
               <span style={{ marginLeft: '15px' }}><Rating rating={product.rating}/></span>
             </div>
-            {/* <button className={classes.add_to_cart}
+            <button className={classes.add_to_cart}
               onClick={() => {
-                const productIndex = cartProduct.findIndex((p) => p.id === product.id);
+                const productIndex = cartProducts.findIndex((p) => p.id === product.id);
 
                 if (productIndex !== -1) {
-                  return setCartProduct(
-                    cartProduct.filter((p) => p.id !== product.id),
+                  setCartProducts(
+                    cartProducts.filter((p) => p.id !== product.id),
                   );
+                } else {
+                  setCartProducts([product, ...cartProducts]);
                 }
-
-                return setCartProduct([product, ...cartProduct]);
               }}
             >
-              {cartProduct?.includes(product) ? 'Drop from cart' : 'Add to cart'}
-            </button> */}
+              {cartProducts.includes(product) ? 'Drop from cart' : 'Add to cart'}
+            </button>
           </div>
         </div>
       </div>

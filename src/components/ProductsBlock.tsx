@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Product } from '../scripts/types';
 import ProductCard from './UI/ProductCard/ProductCard';
 import ProductPopup from './UI/ProductPopup/ProductPopup';
 import { showProducts } from '../scripts/helpers/helpers';
+import { Context } from '../pages/Home';
 
 interface IProducts {
   products: Product[],
@@ -12,10 +14,11 @@ interface IProducts {
 function Products({
   products, pageLimit,
 }: IProducts) {
+  const cartProducts = useContext(Context).cartProducts!;
   const [popupVisibility, setPopupVisibility] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(products[0]);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(0);
-
   const featuredProducts = showProducts(products, `${pageLimit}`);
 
   const openPopup = (p: Product) => {
@@ -25,7 +28,7 @@ function Products({
   return (
     !products.length
       ? <div className='products'>
-        <h3 style={{ marginTop: '30%' }}>'Products not found with the specified price.'</h3>
+        <h3 style={{ marginTop: '30%' }}>Products not found with the specified price.</h3>
       </div>
       : <div className='products'>
         {
@@ -49,8 +52,12 @@ function Products({
         {popupVisibility
         && <ProductPopup
           product={selectedProduct}
-          popupVisibility={popupVisibility}
-          setPopupVisibility={setPopupVisibility}
+          cartProduct={cartProducts}
+          onClick={() => {
+            searchParams.delete('id');
+            setSearchParams(searchParams);
+            setPopupVisibility(false);
+          }}
         />
         }
         {

@@ -35,5 +35,6 @@ export type ContextType ={
   readonly products?: Product[],
   readonly sorting?: SortValue,
   readonly setSorting?: React.Dispatch<React.SetStateAction<SortValue>>,
+  readonly cartProducts?: [Product[], React.Dispatch<React.SetStateAction<Product[]>>],
 }
 export type CartProducts = [Product[], Dispatch<SetStateAction<Product[]>>];
