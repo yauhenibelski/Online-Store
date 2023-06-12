@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Online-Store/static/css/main.f9934ff0.css",
-    "main.js": "/Online-Store/static/js/main.2596be9b.js",
+    "main.css": "/Online-Store/static/css/main.8c3745fc.css",
+    "main.js": "/Online-Store/static/js/main.d70a82d9.js",
     "static/media/stars.svg": "/Online-Store/static/media/stars.c09992222ffdc9795192.svg",
     "static/media/stars_border.svg": "/Online-Store/static/media/stars_border.5cd8e39bf091b75a854c.svg",
     "static/media/shopping-cart.svg": "/Online-Store/static/media/shopping-cart.c53972599f1a24315808.svg",
@@ -11,12 +11,11 @@
     "index.html": "/Online-Store/index.html",
     "static/media/close.svg": "/Online-Store/static/media/close.7983e2f324e371f49106.svg",
     "static/media/logo.svg": "/Online-Store/static/media/logo.99ade57a74ec26aaec09.svg",
-    "static/media/Vector_12.svg": "/Online-Store/static/media/Vector_12.2efbf54e64c1bd146f4c.svg",
-    "main.f9934ff0.css.map": "/Online-Store/static/css/main.f9934ff0.css.map",
-    "main.2596be9b.js.map": "/Online-Store/static/js/main.2596be9b.js.map"
+    "main.8c3745fc.css.map": "/Online-Store/static/css/main.8c3745fc.css.map",
+    "main.d70a82d9.js.map": "/Online-Store/static/js/main.d70a82d9.js.map"
   },
   "entrypoints": [
-    "static/css/main.f9934ff0.css",
-    "static/js/main.2596be9b.js"
+    "static/css/main.8c3745fc.css",
+    "static/js/main.d70a82d9.js"
   ]
 }
